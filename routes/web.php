@@ -14,14 +14,22 @@ use App\Events\MessagePosted;
 */
 
 
+/**
+ * Auth Routes
+ */
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-
-Route::post('message', function(Request $request) {
+/**
+ * Post Messages
+ */
+Route::post('/api/messages', function(Request $request) {
 
     $user = Auth::user();
 
@@ -31,14 +39,24 @@ Route::post('message', function(Request $request) {
 
     event(new MessagePosted($message, $user));
 
-});
+})->middleware('auth');
 
+
+/**
+ * Get Messages
+ */
+Route::get('/api/messages', function (){
+
+    return \App\ChatMessage::all();
+
+})->middleware('auth');
+
+
+/**
+ * Testes
+ */
 Route::get('testes', function (){
 
     return Auth::user();
 
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

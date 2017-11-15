@@ -11,8 +11,8 @@
         <hr>
         <h3>Messages</h3>
 
-        <ul v-for="post in posts">
-            <b>@{{ post.username }} says:</b> @{{ post.message }}
+        <ul v-for="message in messages">
+            <b>@{{ message.user.name }} says:</b> {{ message.message }}
         </ul>
 
     </div>
@@ -24,6 +24,8 @@
 
     export default {
         mounted() {
+
+            this.getMessages();
 
             Echo.channel('public-test-channel')
                 .listen('MessagePosted', (data) => {
@@ -42,7 +44,7 @@
 
         data() {
             return {
-                posts: [],
+                messages: [],
                 newMsg: '',
 
             }
@@ -53,12 +55,22 @@
             press() {
 
                 // Send message to backend.
-                axios.post('/message', {message: this.newMsg})
+                axios.post('/api/messages', {message: this.newMsg})
                     .then((response) => {
 
                         // Clear input field.
                         this.newMsg = '';
                     });
+            },
+
+            getMessages(){
+
+                axios.get('/api/messages').then(response => {
+
+                    this.messages = response.data;
+
+                })
+
             }
         }
 

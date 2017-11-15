@@ -47953,7 +47953,7 @@ exports = module.exports = __webpack_require__(44)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48245,6 +48245,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
 
+        this.getMessages();
+
         Echo.channel('public-test-channel').listen('MessagePosted', function (data) {
 
             console.log(data);
@@ -48260,7 +48262,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            posts: [],
+            messages: [],
             newMsg: ''
 
         };
@@ -48272,10 +48274,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             // Send message to backend.
-            axios.post('/message', { message: this.newMsg }).then(function (response) {
+            axios.post('/api/messages', { message: this.newMsg }).then(function (response) {
 
                 // Clear input field.
                 _this.newMsg = '';
+            });
+        },
+        getMessages: function getMessages() {
+            var _this2 = this;
+
+            axios.get('/api/messages').then(function (response) {
+
+                _this2.messages = response.data;
             });
         }
     }
@@ -48332,10 +48342,10 @@ var render = function() {
       _vm._v(" "),
       _c("h3", [_vm._v("Messages")]),
       _vm._v(" "),
-      _vm._l(_vm.posts, function(post) {
+      _vm._l(_vm.messages, function(message) {
         return _c("ul", [
-          _c("b", [_vm._v("@" + _vm._s(post.username) + " says:")]),
-          _vm._v(" @" + _vm._s(post.message) + "\n    ")
+          _c("b", [_vm._v("@" + _vm._s(message.user.name) + " says:")]),
+          _vm._v(" " + _vm._s(message.message) + "\n    ")
         ])
       })
     ],
