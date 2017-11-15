@@ -1,5 +1,22 @@
 <template>
 
+    <div>
+
+        <hr>
+
+        <h4>Write something to all users</h4>
+
+        <input type="text" class="form-control" placeholder="something" required="required" v-model="newMsg" @keyup.enter="press">
+
+        <hr>
+        <h3>Messages</h3>
+
+        <ul v-for="post in posts">
+            <b>@{{ post.username }} says:</b> @{{ post.message }}
+        </ul>
+
+    </div>
+
 
 </template>
 
@@ -11,11 +28,13 @@
             Echo.channel('public-test-channel')
                 .listen('MessagePosted', (data) => {
 
-                    // Push ata to posts list.
-                    this.posts.push({
-                        message: data.chatMessage.message,
-                        username: data.user.name
-                    });
+                    console.log(data);
+
+//                    // Push ata to posts list.
+//                    this.posts.push({
+//                        message: data.chatMessage.message,
+//                        username: data.user.name
+//                    });
                 });
 
             console.log('Component mounted.')
@@ -34,7 +53,7 @@
             press() {
 
                 // Send message to backend.
-                this.$http.post('/message/', {message: this.newMsg})
+                axios.post('/message', {message: this.newMsg})
                     .then((response) => {
 
                         // Clear input field.

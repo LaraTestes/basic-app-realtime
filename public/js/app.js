@@ -47953,7 +47953,7 @@ exports = module.exports = __webpack_require__(44)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48223,19 +48223,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
-        var _this = this;
 
         Echo.channel('public-test-channel').listen('MessagePosted', function (data) {
 
-            // Push ata to posts list.
-            _this.posts.push({
-                message: data.chatMessage.message,
-                username: data.user.name
-            });
+            console.log(data);
+
+            //                    // Push ata to posts list.
+            //                    this.posts.push({
+            //                        message: data.chatMessage.message,
+            //                        username: data.user.name
+            //                    });
         });
 
         console.log('Component mounted.');
@@ -48251,13 +48269,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         press: function press() {
-            var _this2 = this;
+            var _this = this;
 
             // Send message to backend.
-            this.$http.post('/message/', { message: this.newMsg }).then(function (response) {
+            axios.post('/message', { message: this.newMsg }).then(function (response) {
 
                 // Clear input field.
-                _this2.newMsg = '';
+                _this.newMsg = '';
             });
         }
     }
@@ -48272,7 +48290,57 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "div",
+    [
+      _c("hr"),
+      _vm._v(" "),
+      _c("h4", [_vm._v("Write something to all users")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.newMsg,
+            expression: "newMsg"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "something", required: "required" },
+        domProps: { value: _vm.newMsg },
+        on: {
+          keyup: function($event) {
+            if (
+              !("button" in $event) &&
+              _vm._k($event.keyCode, "enter", 13, $event.key)
+            ) {
+              return null
+            }
+            _vm.press($event)
+          },
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.newMsg = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("h3", [_vm._v("Messages")]),
+      _vm._v(" "),
+      _vm._l(_vm.posts, function(post) {
+        return _c("ul", [
+          _c("b", [_vm._v("@" + _vm._s(post.username) + " says:")]),
+          _vm._v(" @" + _vm._s(post.message) + "\n    ")
+        ])
+      })
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

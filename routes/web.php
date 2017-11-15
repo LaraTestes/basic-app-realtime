@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\MessagePosted;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +13,8 @@
 |
 */
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -21,13 +25,17 @@ Route::post('message', function(Request $request) {
 
     $user = Auth::user();
 
-    $message = ChatMessage::create([
-        'user_id' => $user->id,
-        'message' => $request->input('message')
+    $message = $user->messages()->create([
+        'message' => request()->get('message')
     ]);
 
-    event(new ChatMessageWasReceived($message, $user));
+    event(new MessagePosted($message, $user));
 
+});
+
+Route::get('testes', function (){
+
+    return Auth::user();
 
 });
 

@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                        <chat></chat>
+
                 </div>
             </div>
         </div>
