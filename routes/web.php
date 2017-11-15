@@ -14,3 +14,19 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+
+Route::post('message', function(Request $request) {
+
+    $user = Auth::user();
+
+    $message = ChatMessage::create([
+        'user_id' => $user->id,
+        'message' => $request->input('message')
+    ]);
+
+    event(new ChatMessageWasReceived($message, $user));
+
+
+});
