@@ -17,6 +17,8 @@ window.Vue = require('vue');
 
 Vue.component('example', require('./components/Example.vue'));
 
+Vue.component('chat', require('./components/chat'));
+
 const app = new Vue({
     el: '#app'
 });
