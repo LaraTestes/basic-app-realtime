@@ -47953,7 +47953,7 @@ exports = module.exports = __webpack_require__(44)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48244,18 +48244,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
+        var _this = this;
 
         this.getMessages();
 
         Echo.channel('public-test-channel').listen('MessagePosted', function (data) {
 
-            console.log(data);
+            //                    console.log(data);
 
-            //                    // Push ata to posts list.
-            //                    this.posts.push({
-            //                        message: data.chatMessage.message,
-            //                        username: data.user.name
-            //                    });
+            // Push ata to posts list.
+            _this.messages.push({
+                message: data.chatMessage.message,
+                user: data.user
+            });
         });
 
         console.log('Component mounted.');
@@ -48271,21 +48272,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         press: function press() {
-            var _this = this;
+            var _this2 = this;
+
+            // Clear input field.
 
             // Send message to backend.
             axios.post('/api/messages', { message: this.newMsg }).then(function (response) {
 
-                // Clear input field.
-                _this.newMsg = '';
+                _this2.newMsg = '';
             });
         },
         getMessages: function getMessages() {
-            var _this2 = this;
+            var _this3 = this;
 
             axios.get('/api/messages').then(function (response) {
 
-                _this2.messages = response.data;
+                _this3.messages = response.data;
             });
         }
     }

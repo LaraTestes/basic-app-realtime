@@ -43,6 +43,6 @@ class MessagePosted implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('public-test-channel');
+        return new Channel('public-test-channel');
     }
 }

@@ -30,13 +30,13 @@
             Echo.channel('public-test-channel')
                 .listen('MessagePosted', (data) => {
 
-                    console.log(data);
+//                    console.log(data);
 
-//                    // Push ata to posts list.
-//                    this.posts.push({
-//                        message: data.chatMessage.message,
-//                        username: data.user.name
-//                    });
+                    // Push ata to posts list.
+                    this.messages.push({
+                        message: data.chatMessage.message,
+                        user : data.user
+                    });
                 });
 
             console.log('Component mounted.')
@@ -54,12 +54,14 @@
 
             press() {
 
+                // Clear input field.
+
                 // Send message to backend.
                 axios.post('/api/messages', {message: this.newMsg})
                     .then((response) => {
 
-                        // Clear input field.
                         this.newMsg = '';
+
                     });
             },
 
