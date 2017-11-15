@@ -1,5 +1,4 @@
 <template>
-
     <div>
 
         <hr>
@@ -16,8 +15,6 @@
         </ul>
 
     </div>
-
-
 </template>
 
 <script>
@@ -30,21 +27,19 @@
             Echo.channel('public-test-channel')
                 .listen('MessagePosted', (data) => {
 
-//                    console.log(data);
-
                     // Push ata to posts list.
                     this.messages.push({
                         message: data.chatMessage.message,
                         user : data.user
                     });
                 });
-
-            console.log('Component mounted.')
         },
 
         data() {
             return {
+
                 messages: [],
+
                 newMsg: '',
 
             }
@@ -52,19 +47,20 @@
 
         methods: {
 
+            // Send message to backend.
             press() {
 
-                // Clear input field.
-
-                // Send message to backend.
                 axios.post('/api/messages', {message: this.newMsg})
+
                     .then((response) => {
 
+                        // Clear input field.
                         this.newMsg = '';
 
                     });
             },
 
+             // Get MEssages in Backend
             getMessages(){
 
                 axios.get('/api/messages').then(response => {
@@ -76,12 +72,5 @@
             }
         }
 
-
     }
-
 </script>
-
-<style>
-
-
-</style>

@@ -50,13 +50,3 @@ Route::get('/api/messages', function (){
     return \App\ChatMessage::all();
 
 })->middleware('auth');
-
-
-/**
- * Testes
- */
-Route::get('testes', function (){
-
-    return Auth::user();
-
-});
